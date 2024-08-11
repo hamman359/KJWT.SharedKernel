@@ -1,0 +1,18 @@
+﻿using KJWT.SharedKernel.Results;
+
+namespace KJWT.SharedKernel.AspNetCore.Exceptions;
+
+internal class UnexpectedFailureResultsException : Exception
+{
+    public UnexpectedFailureResultsException(IEnumerable<ResultStatus> statuses)
+    {
+        UnexpectedStatuses = statuses;
+    }
+
+    public IEnumerable<ResultStatus> UnexpectedStatuses { get; }
+
+    public override string ToString()
+    {
+        return $"ActionModel has [{nameof(ExpectedFailuresAttribute)}] with result statuses which are not configured in ResultConvention.";
+    }
+}

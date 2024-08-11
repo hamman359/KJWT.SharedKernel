@@ -1,0 +1,1 @@
+A collection of common classes and extensions for use in all my projects.
