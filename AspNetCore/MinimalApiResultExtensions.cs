@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Http = Microsoft.AspNetCore.Http;
 
-namespace KJWT.SharedKernel.AspNetCore.Exceptions;
+namespace KJWT.SharedKernel.AspNetCore;
 
 #if NET7_0_OR_GREATER
 
@@ -14,24 +14,24 @@ namespace KJWT.SharedKernel.AspNetCore.Exceptions;
 public static partial class ResultExtensions
 {
     /// <summary>
-    /// Convert a <see cref="Result{T}"/> to an instance of <see cref="Microsoft.AspNetCore.Http.IResult"/>
+    /// Convert a <see cref="Result{T}"/> to an instance of <see cref="Http.IResult"/>
     /// </summary>
     /// <typeparam name="T">The value being returned</typeparam>
     /// <param name="result">The Ardalis.Result to convert to an Microsoft.AspNetCore.Http.IResult</param>
     /// <returns></returns>
     public static Http.IResult ToMinimalApiResult<T>(this Result<T> result)
     {
-        return ToMinimalApiResult((IResult)result);
+        return ((IResult)result).ToMinimalApiResult();
     }
 
     /// <summary>
-    /// Convert a <see cref="Result"/> to an instance of <see cref="Microsoft.AspNetCore.Http.IResult"/>
+    /// Convert a <see cref="Result"/> to an instance of <see cref="Http.IResult"/>
     /// </summary>
     /// <param name="result">The Ardalis.Result to convert to an Microsoft.AspNetCore.Http.IResult</param>
     /// <returns></returns>
     public static Http.IResult ToMinimalApiResult(this Result result)
     {
-        return ToMinimalApiResult((IResult)result);
+        return ((IResult)result).ToMinimalApiResult();
     }
 
     internal static Http.IResult ToMinimalApiResult(this IResult result) =>
@@ -57,7 +57,7 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        foreach(var error in result.Errors)
+        foreach (var error in result.Errors)
             details.Append("* ").Append(error).AppendLine();
 
         return Http.Results.UnprocessableEntity(new ProblemDetails
@@ -71,9 +71,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.NotFound(new ProblemDetails
@@ -92,9 +92,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.Conflict(new ProblemDetails
@@ -113,9 +113,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.Problem(new ProblemDetails()
@@ -135,9 +135,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.Problem(new ProblemDetails
@@ -157,9 +157,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.Problem(new ProblemDetails
@@ -179,9 +179,9 @@ public static partial class ResultExtensions
     {
         var details = new StringBuilder("Next error(s) occurred:");
 
-        if(result.Errors.Any())
+        if (result.Errors.Any())
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 details.Append("* ").Append(error).AppendLine();
 
             return Http.Results.Problem(new ProblemDetails
